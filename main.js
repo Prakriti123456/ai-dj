@@ -3,7 +3,7 @@ leftWX = 0;
 leftWY = 0;
 rightWX = 0;
 rightWY = 0;
-score_leftW = 0;
+scoreleftW = 0;
 
 function preload() {
     song = loadSound("music.mp3");
@@ -48,7 +48,7 @@ function gotPoses(results) {
         console.log(results);
         scoreleftW = results[0].pose.keypoints[9].score;
         console.log("score left Wrist = " + scoreleftW);
-        
+
         leftWX = results[0].pose.leftWrist.x;
         leftWY = results[0].pose.leftWrist.y;
 
