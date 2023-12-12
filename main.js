@@ -3,6 +3,7 @@ leftWX = 0;
 leftWY = 0;
 rightWX = 0;
 rightWY = 0;
+score_leftW = 0;
 
 function preload() {
     song = loadSound("music.mp3");
@@ -24,6 +25,17 @@ function modelLoaded() {
 
 function draw() {
     image(video, 0, 0, 600, 500);
+    if (scoreleftW > 0.2) {
+        fill("#FF0000");
+        stroke("#FF0000");
+        circle(leftWX, leftWY, 20);
+        inNoleftWY = Number(leftWY);
+        r_d = floor(inNoleftWY);
+        volume = r_d / 500;
+        document.getElementById("volume").innerHTML = "Volume = " + volume;
+        song.setVolume(volume);
+    }
+
 }
 function play() {
     song.play();
@@ -34,6 +46,9 @@ function play() {
 function gotPoses(results) {
     if (results.length > 0) {
         console.log(results);
+        scoreleftW = results[0].pose.keypoints[9].score;
+        console.log("score left Wrist = " + scoreleftW);
+        
         leftWX = results[0].pose.leftWrist.x;
         leftWY = results[0].pose.leftWrist.y;
 
