@@ -4,6 +4,8 @@ leftWY = 0;
 rightWX = 0;
 rightWY = 0;
 scoreleftW = 0;
+scorerightW=0;
+
 
 function preload() {
     song = loadSound("music.mp3");
@@ -25,9 +27,34 @@ function modelLoaded() {
 
 function draw() {
     image(video, 0, 0, 600, 500);
+
+    fill("#FF0000");
+    stroke("#FF0000");
+    circle(rightWX,rightWY,20);
+    if(scorerightW>0.2){
+        if(rightWY>0 && rightWY<=100){
+            document.getElementById("speed").innerHTML="Speed = 0.5x";
+            song.rate(0.5);
+        }
+        else if(rightWY>100 && rightWY<=200){
+            document.getElementById("speed").innerHTML="Speed = 1x";
+            song.rate(1);
+        }
+        else if(rightWY>200 && rightWY<=300){
+            document.getElementById("speed").innerHTML="Speed = 1.5x";
+            song.rate(1.5);
+        }
+        else if(rightWY>300 && rightWY<=400){
+            document.getElementById("speed").innerHTML="Speed = 2x";
+            song.rate(2);
+        }
+        else if(rightWY>400 && rightWY<=500){
+            document.getElementById("speed").innerHTML="Speed = 2.5x";
+            song.rate(2.5);
+        }
+    }
+
     if (scoreleftW > 0.2) {
-        fill("#FF0000");
-        stroke("#FF0000");
         circle(leftWX, leftWY, 20);
         inNoleftWY = Number(leftWY);
         r_d = floor(inNoleftWY);
@@ -46,8 +73,10 @@ function play() {
 function gotPoses(results) {
     if (results.length > 0) {
         console.log(results);
+        scorerightW=results[0].pose.keypoints[10].score;
         scoreleftW = results[0].pose.keypoints[9].score;
         console.log("score left Wrist = " + scoreleftW);
+        console.log("Score Right Wrist = " +scorerightW);
 
         leftWX = results[0].pose.leftWrist.x;
         leftWY = results[0].pose.leftWrist.y;
